@@ -31,7 +31,7 @@ from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from typing import Any
 
-from core.events.bus import SystemEvent
+from core.events.bus import EventPriority, SystemEvent
 
 from research.discovery_swarm.agents.base import DiscoveryAgent
 

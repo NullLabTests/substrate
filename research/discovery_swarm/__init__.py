@@ -48,6 +48,7 @@ Usage::
     report.save("superconductor_mission.json")
 """
 
+from research.discovery_swarm.discovery_crew import DiscoveryCrew
 from research.discovery_swarm.mission import (
     DiscoveryMission,
     MissionPhase,
@@ -61,6 +62,7 @@ from research.discovery_swarm.roles import (
 )
 
 __all__ = [
+    "DiscoveryCrew",
     "DiscoveryMission",
     "MissionPhase",
     "MissionReport",
