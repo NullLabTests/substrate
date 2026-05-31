@@ -407,6 +407,71 @@ Two team configurations:
 - **3-agent** (minimal): HypothesisGenerator → ExperimentalDesigner → CriticalAnalyst
 - **7-agent** (full): LiteratureSynthesizer → HypothesisGenerator → ExperimentalDesigner → SimulationRunner → StatisticalAnalyst → CriticalReviewer → ReportComposer
 
+### Discovery Swarm 🚀
+
+The [`research/discovery_swarm/`](./research/discovery_swarm/) module provides a **7-agent end-to-end scientific discovery system** for tackling hard research problems. Unlike the curiosity swarm (iterative hypothesis refinement), the Discovery Swarm executes a **directed acyclic graph (DAG) workflow** with parallel agent execution:
+
+```
+Orchestrator → LiteratureScout → HypothesisForge
+                                         │
+                                    Parallel │
+                               ┌──────────────┼──────────────┐
+                               │              │              │
+                         Critical       Simulation    Uncertainty
+                         Reviewer       Engineer     Quantifier
+                               │              │              │
+                               └──────────────┼──────────────┘
+                                              │
+                                         Synthesis
+                                         Architect
+                                              │
+                                         Ranked Proposals
+```
+
+**7 Agent Roles:**
+
+| Role | Phase | Responsibility |
+|------|-------|---------------|
+| **Orchestrator** | Planning | Decomposes question into sub-problems, defines success criteria |
+| **Literature Scout** | Research | Surveys knowledge, identifies constraints and open questions |
+| **Hypothesis Forge** | Ideation | Generates ranked candidate hypotheses with testable predictions |
+| **Critical Reviewer** | Evaluation | Rigorously critiques each hypothesis for flaws and alternatives |
+| **Simulation Engineer** | Simulation | Designs & runs Substrate experiments, collects metrics |
+| **Uncertainty Quantifier** | Evaluation | Bootstrap CIs, sensitivity analysis, robustness checks |
+| **Synthesis Architect** | Synthesis | Integrates everything into ranked, publication-ready proposals |
+
+Every phase produces **structured JSON output** with a defined schema. The full mission record is saved as a reproducible, auditable artifact.
+
+**CLI:**
+
+```bash
+# Launch a discovery mission
+substrate launch-discovery-mission --question "Design a promising new room-temperature superconductor candidate"
+
+# Launch with interactive prompt
+substrate launch-discovery-mission --interactive
+
+# Use the example script
+python examples/discovery_mission.py
+```
+
+**Programmatic API:**
+
+```python
+from research.discovery_swarm import DiscoveryMission
+
+mission = DiscoveryMission(
+    question="Design a room-temperature superconductor candidate",
+    max_parallel_workers=3,
+)
+report = await mission.run()
+report.save("superconductor_mission.json")
+
+# Proposals are ranked with confidence scores
+for p in report.final_proposals:
+    print(f"[{p['confidence']}] {p['title'][:80]}")
+```
+
 ### Predefined Investigations
 
 | Investigation | Question | Team |

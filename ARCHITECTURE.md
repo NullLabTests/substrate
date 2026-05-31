@@ -798,6 +798,143 @@ substrate/                        # Package name: "substrate"
 
 The directory `platform/` shadows Python's stdlib `platform` module (used by `uuid`, `os`, and other built-in modules). This caused an import cycle: `pydantic → uuid → platform (stdlib) → platform/__init__.py (local) → pydantic`. Renaming to `orchestrator/` resolves this collision while maintaining semantic clarity.
 
+---
+
+## 14. Discovery Swarm (`research/discovery_swarm/`)
+
+### Purpose
+
+The Discovery Swarm is a 7-agent autonomous scientific discovery system that runs on top of the Substrate runtime. It decomposes a research question, surveys literature, generates hypotheses, runs simulation experiments, quantifies uncertainty, and delivers ranked proposals — all within a reproducible, auditable workflow.
+
+### Architecture
+
+The swarm executes a **directed acyclic graph (DAG) workflow** with parallel agent execution:
+
+```
+┌──────────────┐
+│ Orchestrator │  Phase: PLANNING  — decomposes question → sub-problems
+└──────┬───────┘
+       │
+┌──────▼───────┐
+│Literature    │  Phase: RESEARCH  — surveys existing knowledge
+│ Scout        │
+└──────┬───────┘
+       │
+┌──────▼───────┐
+│Hypothesis    │  Phase: IDEATION  — generates candidates
+│ Forge        │
+└──────┬───────┘
+       │
+┌──────┴──────────────────┐
+│      PARALLEL GROUP      │
+├──────────────────────────┤
+│ Critical     │ Simulation│
+│ Reviewer     │ Engineer  │
+│ (evaluation) │ (sim)     │
+├──────────────┼──────────┤
+│ Uncertainty Quanitifier  │
+│ (evaluation)             │
+└──────────────────────────┘
+       │
+┌──────▼───────────────┐
+│ Synthesis Architect  │  Phase: SYNTHESIS — ranked proposals
+└──────────────────────┘
+```
+
+### Agent Roles
+
+| Role | Input | Output | Executes On |
+|------|-------|--------|-------------|
+| Orchestrator | User question | Mission plan (sub-problems, criteria) | Planning phase |
+| Literature Scout | Mission plan | Knowledge survey (facts, gaps, constraints) | Research phase |
+| Hypothesis Forge | Knowledge survey | Hypothesis bank (ranked candidates with predictions) | Ideation phase |
+| Critical Reviewer | Hypothesis bank | Critique matrix (surviving/rejected hypotheses) | Evaluation phase (parallel) |
+| Simulation Engineer | Surviving hypotheses | Experiment results (metrics from Substrate runtime) | Simulation phase (parallel) |
+| Uncertainty Quantifier | Experiment results | Confidence intervals, sensitivity analysis | Evaluation phase (parallel) |
+| Synthesis Architect | All above | Ranked proposals with executive summary | Synthesis phase |
+
+### Structured JSON Outputs
+
+Every phase produces a validated JSON document with a defined schema. This ensures:
+
+- **Auditability**: Every decision traced back to its inputs
+- **Reproducibility**: Full mission record with seeds, git hash, and dependencies
+- **Composability**: Phase outputs chain as inputs to downstream phases
+
+Example output schema for Hypothesis Forge:
+```json
+{
+  "hypothesis_bank": {
+    "candidates": [
+      {
+        "id": "H-1",
+        "hypothesis": "...",
+        "mechanism": "...",
+        "predictions": ["prediction 1"],
+        "novelty_score": 0.85,
+        "feasibility_score": 0.7,
+        "impact_if_true": 0.95,
+        "composite_score": 0.78
+      }
+    ],
+    "ranked_order": ["H-1", "H-2"]
+  }
+}
+```
+
+### Mission Lifecycle
+
+```
+PENDING → IN_PROGRESS → COMPLETED | FAILED | PARTIAL
+```
+
+The mission report (`MissionReport`) contains:
+- `mission_id`: Unique identifier
+- `question`: Original research question
+- `status`: Current mission status
+- `phases`: Array of `PhaseOutput` objects (one per phase)
+- `final_proposals`: Ranked list of discovery proposals
+- `executive_summary`: 2-3 paragraph summary
+- `total_duration_seconds`: Wall-clock runtime
+- `reproducibility`: Seeds, git hash, dependencies
+- `error`: Error message if failed
+
+### Integration with Substrate Runtime
+
+The Simulation Engineer role uses the Substrate runtime (`RuntimeEngine`, `EventBus`, `TickScheduler`, `AgentRegistry`) to execute simulation experiments. Each hypothesis's experiment runs as a separate simulation on the tick runtime with:
+
+- Configurable tick count (default: 5000)
+- Automated metric collection via `TelemetryPipeline`
+- Crash recovery via `RecoverySystem`
+- State persistence via `SQLiteBackend`
+- Minimum 5 replicates per configuration
+
+### CLI
+
+```bash
+substrate launch-discovery-mission --question "Design a superconductor"
+substrate launch-discovery-mission --interactive
+substrate launch-discovery-mission --question "..." --output ./results --verbose
+```
+
+### Programmatic API
+
+```python
+from research.discovery_swarm import DiscoveryMission
+
+mission = DiscoveryMission(
+    question="Design a room-temperature superconductor candidate",
+    max_parallel_workers=3,
+)
+report = await mission.run()
+report.save("superconductor_mission.json")
+
+for p in report.final_proposals:
+    print(f"[{p['confidence']}] {p['title']}")
+```
+
+---
+
 ### Why use `aiosqlite` instead of `sqlite3`?
 
 The entire runtime is async (tick loop, event bus, lifecycle). Using `aiosqlite` allows non-blocking database operations within the async event loop without blocking the tick scheduler.
