@@ -382,12 +382,61 @@ Detailed milestones in [`ROADMAP.md`](./ROADMAP.md).
 
 ## Research
 
-Substrate is designed to answer specific research questions about emergent AI civilization behavior. The [`RESEARCH.md`](./RESEARCH.md) document defines:
+Substrate includes a complete research infrastructure for conducting and publishing rigorous computational experiments.
 
-- **7 quantitative metrics** (specialization index, communication entropy, tool adoption rate, memory persistence rate, lineage survival rate, trade network density, reputation convergence)
-- **5 research questions** about specialization, communication, tool diffusion, innovation heritability, and economic complexity
-- **Experimental protocol** with default configurations, intervention types, and replication standards
-- **Null hypothesis expectations** for statistical significance testing
+### Core Framework
+
+| Component | Location | Purpose |
+|-----------|----------|---------|
+| Experiment Protocol | `research/core/` | Base `Experiment` class, `ExperimentConfig`, lifecycle management, replication packaging |
+| Benchmarks | `research/benchmarks/` | Registry of standardized benchmark suites for all 7 metrics |
+| Templates | `research/templates/` | Reusable experiment configurations (baseline, social, tools, economy) |
+| Configurations | `research/config/` | YAML configs for default, quick-test, and full-scale runs |
+
+### Curiosity Swarm
+
+The [`research/curiosity_swarm/`](./research/curiosity_swarm/) module provides a multi-agent scientific investigation system that autonomously:
+
+1. **Formulates hypotheses** from a research question
+2. **Designs and runs** simulation experiments on the Substrate runtime
+3. **Analyzes results** with statistical rigor
+4. **Critiques findings** for biases and alternative explanations
+5. **Composes publication-ready reports**
+
+Two team configurations:
+- **3-agent** (minimal): HypothesisGenerator → ExperimentalDesigner → CriticalAnalyst
+- **7-agent** (full): LiteratureSynthesizer → HypothesisGenerator → ExperimentalDesigner → SimulationRunner → StatisticalAnalyst → CriticalReviewer → ReportComposer
+
+### Predefined Investigations
+
+| Investigation | Question | Team |
+|--------------|----------|------|
+| `hubble_tension` | Resolve the Hubble constant tension | 7-agent |
+| `dark_matter` | Map dark matter distribution | 7-agent |
+| `protein_folding` | Predict protein tertiary structure | 3-agent |
+
+### CLI
+
+```bash
+# Launch a curiosity swarm investigation
+substrate explore "Resolve the Hubble tension"
+
+# Use full 7-agent team
+substrate explore "Map dark matter distribution" --team-size 7 --max-ticks 20
+
+# Run a predefined investigation template
+substrate explore --template hubble_tension
+
+# List available templates
+substrate explore --list
+```
+
+### Research Documents
+
+- [`RESEARCH.md`](./RESEARCH.md) — Formal methodology: 7 metrics, 5 research questions, experimental protocol
+- [`civilization/RESEARCH.md`](./civilization/RESEARCH.md) — Mechanism design: memory, economy, social, evolution, tools
+- [`research/reproducibility/GUIDE.md`](./research/reproducibility/GUIDE.md) — Reproducibility standards and checklist
+- [`research/reports/template.md`](./research/reports/template.md) — Publication-ready report template
 
 ---
 

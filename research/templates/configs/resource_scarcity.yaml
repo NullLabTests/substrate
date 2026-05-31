@@ -1,0 +1,60 @@
+# Resource Scarcity Experiment
+# Tests RQ1: Under what conditions do agents specialize?
+#
+# Manipulation: resource_density (0.1 = scarce vs 0.7 = abundant)
+# Key metrics: specialization_index, trade_network_density, lineage_survival_rate
+# Intervention: resource_shock at tick 7000
+name: "resource_scarcity_high"
+description: "High resource scarcity — strong specialization pressure expected"
+random_seed: 42
+max_ticks: 15000
+
+world:
+  width: 100
+  height: 100
+  resource_types: ["food", "mineral", "water"]
+  resource_density: 0.1        # SCARCE — manipulation
+  regeneration_rate: 0.005     # SLOW REGEN — manipulation
+
+agent:
+  initial_population: 50
+  cognitive_capacity: 10
+  energy_efficiency: 0.5
+  social_affinity: 0.3
+  mutation_rate: 0.01
+
+memory:
+  episodic_capacity: 1000
+  semantic_capacity: 500
+  decay_rate: 0.001
+  inheritance_fraction: 0.3
+
+economy:
+  initial_energy: 100.0
+  energy_decay_rate: 0.02      # HIGHER burn rate — manipulation
+  trade_enabled: true
+
+tools:
+  mutation_rate: 0.05
+  adoption_cost: 5.0
+  initial_tools: 5
+
+persistence:
+  checkpoint_interval: 1000
+  path: ""
+
+interventions:
+  - tick: 7000
+    type: resource_shock
+    params:
+      resource: "food"
+      delta: -0.5               # sudden 50% depletion
+
+telemetry:
+  batch_size: 100
+  flush_interval: 5.0
+  metric_log_interval: 10
+
+replication:
+  num_replicates: 10
+  seeds: [42, 142, 242, 342, 442, 542, 642, 742, 842, 942]

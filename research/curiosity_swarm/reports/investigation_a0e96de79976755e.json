@@ -1,0 +1,85 @@
+{
+  "investigation_id": "investigation_a0e96de79976755e",
+  "research_question": "Test: does social affinity increase trade?",
+  "team_size": "3-agent",
+  "total_ticks": 2,
+  "duration_seconds": 0.4427149295806885,
+  "conclusion": "Investigation of 'Test: does social affinity increase trade?' completed after 2 rounds.\n\nFinal metrics across all rounds:\n  - specialization_index: 0.5000\n  - communication_entropy: 1.2000\n  - trade_network_density: 0.3000\n\nResults were consistent across 2 iterations. No significant anomalies detected.",
+  "confidence": "medium \u2014 requires external validation and peer review",
+  "open_questions": [
+    "Do results generalize to different parameter regimes?",
+    "Are there alternative explanations not tested?",
+    "Would different team configurations reach different conclusions?"
+  ],
+  "ticks": [
+    {
+      "tick": 0,
+      "hypothesis": "Hypothesis: Test: does social affinity increase trade?\n  Prediction: Systematically varying key parameters will produce measurable differences in emergent metrics.\n  Rationale: Based on general principles of complex adaptive systems.",
+      "prediction": "",
+      "experiment_config": {},
+      "metrics": {},
+      "critique": "",
+      "refined_hypothesis": "",
+      "timestamp": "2026-05-31T16:21:48.090402+00:00"
+    },
+    {
+      "tick": 1,
+      "hypothesis": "Hypothesis: Test: does social affinity increase trade?\n  Prediction: Systematically varying key parameters will produce measurable differences in emergent metrics.\n  Rationale: Based on general principles of complex adaptive systems.\n  (refined: adjusted parameters for next iteration)",
+      "prediction": "",
+      "experiment_config": {
+        "name": "auto_generated",
+        "hypothesis": "Hypothesis: Test: does social affinity increase trade?\n  Prediction: Systematically varying key para",
+        "config": {
+          "max_ticks": 1000,
+          "initial_population": 50,
+          "social_affinity": 0.3,
+          "mutation_rate": 0.01
+        },
+        "metrics": [
+          "specialization_index",
+          "communication_entropy",
+          "trade_network_density"
+        ],
+        "replicates": 3
+      },
+      "metrics": {
+        "specialization_index": 0.5,
+        "communication_entropy": 1.2,
+        "trade_network_density": 0.3
+      },
+      "critique": "Critique of hypothesis: Hypothesis: Test: does social affinity increase trade?\n  Prediction: Systematica...\nMetrics observed:\n  - specialization_index: 0.5000\n  - communication_entropy: 1.2000\n  - trade_network_density: 0.3000\nAssessment: Metrics are within expected ranges. Effect sizes need comparison against null model.\nRecommendation: Run additional replicates to confirm stability.",
+      "refined_hypothesis": "Hypothesis: Test: does social affinity increase trade?\n  Prediction: Systematically varying key parameters will produce measurable differences in emergent metrics.\n  Rationale: Based on general principles of complex adaptive systems.\n  (refined: adjusted parameters for next iteration)\n  (refined after critique: increase replicate count and add intervention mid-run)",
+      "timestamp": "2026-05-31T16:21:48.090436+00:00"
+    },
+    {
+      "tick": 2,
+      "hypothesis": "Hypothesis: Test: does social affinity increase trade?\n  Prediction: Systematically varying key parameters will produce measurable differences in emergent metrics.\n  Rationale: Based on general principles of complex adaptive systems.\n  (refined: adjusted parameters for next iteration)\n  (refined after critique: increase replicate count and add intervention mid-run)",
+      "prediction": "",
+      "experiment_config": {
+        "name": "auto_generated",
+        "hypothesis": "Hypothesis: Test: does social affinity increase trade?\n  Prediction: Systematically varying key para",
+        "config": {
+          "max_ticks": 1000,
+          "initial_population": 50,
+          "social_affinity": 0.3,
+          "mutation_rate": 0.01
+        },
+        "metrics": [
+          "specialization_index",
+          "communication_entropy",
+          "trade_network_density"
+        ],
+        "replicates": 3
+      },
+      "metrics": {
+        "specialization_index": 0.5,
+        "communication_entropy": 1.2,
+        "trade_network_density": 0.3
+      },
+      "critique": "Critique of hypothesis: Hypothesis: Test: does social affinity increase trade?\n  Prediction: Systematica...\nMetrics observed:\n  - specialization_index: 0.5000\n  - communication_entropy: 1.2000\n  - trade_network_density: 0.3000\nAssessment: Metrics are within expected ranges. Effect sizes need comparison against null model.\nRecommendation: Run additional replicates to confirm stability.",
+      "refined_hypothesis": "Hypothesis: Test: does social affinity increase trade?\n  Prediction: Systematically varying key parameters will produce measurable differences in emergent metrics.\n  Rationale: Based on general principles of complex adaptive systems.\n  (refined: adjusted parameters for next iteration)\n  (refined after critique: increase replicate count and add intervention mid-run)\n  (refined after critique: increase replicate count and add intervention mid-run)",
+      "timestamp": "2026-05-31T16:21:48.131659+00:00"
+    }
+  ],
+  "created_at": "2026-05-31T16:21:48.533117+00:00"
+}

@@ -1,0 +1,14 @@
+# Full-scale experiment configuration — for production-quality results
+# Runs for 100,000 ticks, 30 replicates, full telemetry
+random_seed: 42
+max_ticks: 100000
+initial_population: 200
+world_width: 500
+world_height: 500
+resource_density: 0.2
+num_replicates: 30
+checkpoint_interval: 5000
+telemetry_batch_size: 500
+telemetry_flush_interval: 1.0
+metric_log_interval: 50
+event_history_limit: 1000000

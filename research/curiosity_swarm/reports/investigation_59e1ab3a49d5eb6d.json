@@ -1,0 +1,114 @@
+{
+  "investigation_id": "investigation_59e1ab3a49d5eb6d",
+  "research_question": "Test question",
+  "team_size": "3-agent",
+  "total_ticks": 3,
+  "duration_seconds": 1.0734479427337646,
+  "conclusion": "Investigation of 'Test question' completed after 3 rounds.\n\nFinal metrics across all rounds:\n  - specialization_index: 0.5000\n  - communication_entropy: 1.2000\n  - trade_network_density: 0.3000\n\nResults were consistent across 3 iterations. No significant anomalies detected.",
+  "confidence": "medium \u2014 requires external validation and peer review",
+  "open_questions": [
+    "Do results generalize to different parameter regimes?",
+    "Are there alternative explanations not tested?",
+    "Would different team configurations reach different conclusions?"
+  ],
+  "ticks": [
+    {
+      "tick": 0,
+      "hypothesis": "Hypothesis: Test question\n  Prediction: Systematically varying key parameters will produce measurable differences in emergent metrics.\n  Rationale: Based on general principles of complex adaptive systems.",
+      "prediction": "",
+      "experiment_config": {},
+      "metrics": {},
+      "critique": "",
+      "refined_hypothesis": "",
+      "timestamp": "2026-05-31T16:21:30.099191+00:00"
+    },
+    {
+      "tick": 1,
+      "hypothesis": "Hypothesis: Test question\n  Prediction: Systematically varying key parameters will produce measurable differences in emergent metrics.\n  Rationale: Based on general principles of complex adaptive systems.\n  (refined: adjusted parameters for next iteration)",
+      "prediction": "",
+      "experiment_config": {
+        "name": "auto_generated",
+        "hypothesis": "Hypothesis: Test question\n  Prediction: Systematically varying key parameters will produce measurabl",
+        "config": {
+          "max_ticks": 1000,
+          "initial_population": 50,
+          "social_affinity": 0.3,
+          "mutation_rate": 0.01
+        },
+        "metrics": [
+          "specialization_index",
+          "communication_entropy",
+          "trade_network_density"
+        ],
+        "replicates": 3
+      },
+      "metrics": {
+        "specialization_index": 0.5,
+        "communication_entropy": 1.2,
+        "trade_network_density": 0.3
+      },
+      "critique": "Critique of hypothesis: Hypothesis: Test question\n  Prediction: Systematically varying key parameters wi...\nMetrics observed:\n  - specialization_index: 0.5000\n  - communication_entropy: 1.2000\n  - trade_network_density: 0.3000\nAssessment: Metrics are within expected ranges. Effect sizes need comparison against null model.\nRecommendation: Run additional replicates to confirm stability.",
+      "refined_hypothesis": "Hypothesis: Test question\n  Prediction: Systematically varying key parameters will produce measurable differences in emergent metrics.\n  Rationale: Based on general principles of complex adaptive systems.\n  (refined: adjusted parameters for next iteration)\n  (refined after critique: increase replicate count and add intervention mid-run)",
+      "timestamp": "2026-05-31T16:21:30.099221+00:00"
+    },
+    {
+      "tick": 2,
+      "hypothesis": "Hypothesis: Test question\n  Prediction: Systematically varying key parameters will produce measurable differences in emergent metrics.\n  Rationale: Based on general principles of complex adaptive systems.\n  (refined: adjusted parameters for next iteration)\n  (refined after critique: increase replicate count and add intervention mid-run)",
+      "prediction": "",
+      "experiment_config": {
+        "name": "auto_generated",
+        "hypothesis": "Hypothesis: Test question\n  Prediction: Systematically varying key parameters will produce measurabl",
+        "config": {
+          "max_ticks": 1000,
+          "initial_population": 50,
+          "social_affinity": 0.3,
+          "mutation_rate": 0.01
+        },
+        "metrics": [
+          "specialization_index",
+          "communication_entropy",
+          "trade_network_density"
+        ],
+        "replicates": 3
+      },
+      "metrics": {
+        "specialization_index": 0.5,
+        "communication_entropy": 1.2,
+        "trade_network_density": 0.3
+      },
+      "critique": "Critique of hypothesis: Hypothesis: Test question\n  Prediction: Systematically varying key parameters wi...\nMetrics observed:\n  - specialization_index: 0.5000\n  - communication_entropy: 1.2000\n  - trade_network_density: 0.3000\nAssessment: Metrics are within expected ranges. Effect sizes need comparison against null model.\nRecommendation: Run additional replicates to confirm stability.",
+      "refined_hypothesis": "Hypothesis: Test question\n  Prediction: Systematically varying key parameters will produce measurable differences in emergent metrics.\n  Rationale: Based on general principles of complex adaptive systems.\n  (refined: adjusted parameters for next iteration)\n  (refined after critique: increase replicate count and add intervention mid-run)\n  (refined after critique: increase replicate count and add intervention mid-run)",
+      "timestamp": "2026-05-31T16:21:30.120969+00:00"
+    },
+    {
+      "tick": 3,
+      "hypothesis": "Hypothesis: Test question\n  Prediction: Systematically varying key parameters will produce measurable differences in emergent metrics.\n  Rationale: Based on general principles of complex adaptive systems.\n  (refined: adjusted parameters for next iteration)\n  (refined after critique: increase replicate count and add intervention mid-run)\n  (refined after critique: increase replicate count and add intervention mid-run)",
+      "prediction": "",
+      "experiment_config": {
+        "name": "auto_generated",
+        "hypothesis": "Hypothesis: Test question\n  Prediction: Systematically varying key parameters will produce measurabl",
+        "config": {
+          "max_ticks": 1000,
+          "initial_population": 50,
+          "social_affinity": 0.3,
+          "mutation_rate": 0.01
+        },
+        "metrics": [
+          "specialization_index",
+          "communication_entropy",
+          "trade_network_density"
+        ],
+        "replicates": 3
+      },
+      "metrics": {
+        "specialization_index": 0.5,
+        "communication_entropy": 1.2,
+        "trade_network_density": 0.3
+      },
+      "critique": "Critique of hypothesis: Hypothesis: Test question\n  Prediction: Systematically varying key parameters wi...\nMetrics observed:\n  - specialization_index: 0.5000\n  - communication_entropy: 1.2000\n  - trade_network_density: 0.3000\nAssessment: Metrics are within expected ranges. Effect sizes need comparison against null model.\nRecommendation: Run additional replicates to confirm stability.",
+      "refined_hypothesis": "Hypothesis: Test question\n  Prediction: Systematically varying key parameters will produce measurable differences in emergent metrics.\n  Rationale: Based on general principles of complex adaptive systems.\n  (refined: adjusted parameters for next iteration)\n  (refined after critique: increase replicate count and add intervention mid-run)\n  (refined after critique: increase replicate count and add intervention mid-run)\n  (refined after critique: increase replicate count and add intervention mid-run)",
+      "timestamp": "2026-05-31T16:21:31.172479+00:00"
+    }
+  ],
+  "created_at": "2026-05-31T16:21:31.172639+00:00"
+}

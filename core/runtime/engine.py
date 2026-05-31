@@ -124,16 +124,21 @@ class RuntimeEngine:
         self._state = RuntimeState.STOPPED
         self._logger.info("runtime_stopped", subsystem="engine")
 
-    async def save_state(self) -> None:
-        """Persist runtime state snapshot."""
-        snapshot = {
+    async def save_state(self) -> dict[str, Any]:
+        """Return serializable runtime state snapshot.
+
+        Returns:
+            A JSON-serializable dict with runtime state. The caller
+            (Orchestrator) is responsible for persisting this state.
+        """
+        snapshot: dict[str, Any] = {
             "state": self._state,
             "tick_count": self._tick_count,
             "started_at": self._started_at.isoformat() if self._started_at else None,
             "timestamp": datetime.now(timezone.utc).isoformat(),
         }
-        await self._persistence.save("runtime_state", snapshot)
         self._logger.debug("runtime_state_saved", tick_count=self._tick_count)
+        return snapshot
 
     async def load_state(self) -> dict[str, Any]:
         """Restore runtime state from persistence."""

@@ -61,11 +61,18 @@ class TestRuntimeEngine:
         assert engine.state == RuntimeState.STOPPED
 
     async def test_save_and_load_state(self, engine: RuntimeEngine) -> None:
-        await engine.save_state()
+        state = await engine.save_state()
+        assert isinstance(state, dict)
+        assert "tick_count" in state
+        assert "state" in state
+
+    async def test_load_restores_tick_count(self, engine: RuntimeEngine) -> None:
+        # Manually persist a state so load_state has data to restore
+        from tests.conftest import InMemoryBackend
+        await engine._persistence.save("runtime_state", {"tick_count": 42, "state": "created"})
         loaded = await engine.load_state()
         assert loaded is not None
-        assert "tick_count" in loaded
-        assert "state" in loaded
+        assert loaded.get("tick_count") == 42
 
     async def test_register_tick_hook(self, engine: RuntimeEngine) -> None:
         ticks_seen: list[int] = []

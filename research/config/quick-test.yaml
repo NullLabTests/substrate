@@ -1,0 +1,9 @@
+# Quick test configuration — for rapid iteration during development
+# Runs for 100 ticks, 3 replicates, minimal output
+random_seed: 42
+max_ticks: 100
+initial_population: 10
+resource_density: 0.5
+num_replicates: 3
+telemetry_batch_size: 10
+metric_log_interval: 1
