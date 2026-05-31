@@ -39,7 +39,7 @@ jobs:
         run: ruff check .
 
       - name: Type check with mypy
-        run: mypy core/ storage/ config/ platform/ tests/
+        run: mypy core/ civilization/ memory/ economy/ tests/
 
   test:
     name: Tests (Python ${{ matrix.python-version }})
@@ -65,7 +65,7 @@ jobs:
 
       - name: Run tests with coverage
         run: |
-          pytest --cov=core --cov=storage --cov=config --cov=platform \
+          pytest --cov=core --cov=civilization --cov=memory --cov=economy \
                  --cov-report=term --cov-report=xml \
                  --cov-fail-under=80 -v
 

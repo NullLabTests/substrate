@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "substrate"
 version = "0.1.0"
-description = "Substrate simulation runtime - tick-based async engine with event bus, registry, persistence, telemetry, and recovery"
+description = "A persistent multi-agent civilization experiment exploring the emergence of collective intelligence"
 readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }
@@ -20,7 +20,7 @@ dependencies = [
 ]
 
 [tool.setuptools.packages.find]
-include = ["core*", "storage*", "config*", "platform*", "tests*", "civilization*", "memory*", "economy*", "evolution*", "social*", "tools*", "research*", "docs*"]
+include = ["core*", "civilization*", "memory*", "economy*", "evolution*", "social*", "tools*", "observatory*", "tests*", "docs*"]
 
 [project.optional-dependencies]
 dev = [
@@ -41,7 +41,7 @@ filterwarnings = [
 ]
 
 [tool.coverage.run]
-source = ["core", "storage", "config", "platform"]
+source = ["core", "civilization", "memory", "economy", "evolution", "social", "tools", "observatory"]
 omit = ["*/__pycache__/*", "*/tests/*", "*.pyc"]
 
 [tool.coverage.report]
