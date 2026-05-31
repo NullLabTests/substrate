@@ -59,7 +59,7 @@ include = ["core*", "storage*", "config*", "orchestrator*", "tests*", "civilizat
 dev = [
     "pytest>=8.0",
     "pytest-asyncio>=0.23.0",
-    "pytest-cov>=4.1.0",
+    "pytest-cov>=7.1.0",
     "ruff>=0.1.0",
     "mypy>=1.7.0",
 ]
