@@ -1,6 +1,6 @@
-"""Platform integration module.
+"""Orchestrator integration module.
 
-Wires all subsystems together and provides a unified Platform class
+Wires all subsystems together and provides a unified Orchestrator class
 for lifecycle management, state persistence, and recovery.
 """
 
@@ -19,7 +19,7 @@ from core.telemetry.pipeline import TelemetryPipeline
 from config.settings import Settings
 
 
-class Platform:
+class Orchestrator:
     """Top-level integration point for the substrate system.
 
     Initializes all subsystems in dependency order, provides
@@ -45,7 +45,7 @@ class Platform:
     async def initialize(self) -> None:
         """Initialize all subsystems in dependency order."""
         await self._logger.initialize()
-        self._logger.info("platform_initializing")
+        self._logger.info("orchestrator_initializing")
 
         self._persistence = await self._build_persistence()
         await self._persistence.initialize()
@@ -68,11 +68,11 @@ class Platform:
         )
 
         await self._runtime.initialize()
-        self._logger.info("platform_initialized")
+        self._logger.info("orchestrator_initialized")
 
     async def shutdown(self) -> None:
         """Shut down all subsystems in reverse dependency order."""
-        self._logger.info("platform_shutting_down")
+        self._logger.info("orchestrator_shutting_down")
         if self._runtime:
             await self._runtime.shutdown()
 
@@ -82,15 +82,35 @@ class Platform:
         await self._logger.shutdown()
 
     async def save_state(self) -> None:
-        """Save state for all subsystems."""
+        """Save state for all subsystems.
+
+        Persists individual subsystem states to the key-value store,
+        and also stores a combined recovery snapshot.
+        """
         if not self._runtime:
             return
         states: dict[str, dict[str, Any]] = {}
 
-        states["runtime"] = await self._runtime.save_state()
-        states["event_bus"] = await self._event_bus.save_state()
-        states["registry"] = await self._agent_registry.save_state()
-        states["scheduler"] = await self._tick_scheduler.save_state()
+        runtime_state = await self._runtime.save_state()
+        states["runtime"] = runtime_state
+        if self._persistence:
+            await self._persistence.save("runtime_state", runtime_state)
+
+        bus_state = await self._event_bus.save_state()
+        states["event_bus"] = bus_state
+        if self._persistence:
+            await self._persistence.save("event_bus", bus_state)
+
+        reg_state = await self._agent_registry.save_state()
+        states["registry"] = reg_state
+        if self._persistence:
+            await self._persistence.save("registry", reg_state)
+
+        sched_state = await self._tick_scheduler.save_state()
+        states["scheduler"] = sched_state
+        if self._persistence:
+            await self._persistence.save("scheduler", sched_state)
+
         states["telemetry"] = await self._telemetry.save_state()
         states["logger"] = await self._logger.save_state()
 
@@ -118,7 +138,7 @@ class Platform:
         if sched_state:
             await self._tick_scheduler.load_state(sched_state)
 
-        self._logger.info("platform_state_loaded")
+        self._logger.info("orchestrator_state_loaded")
 
     @property
     def runtime(self) -> RuntimeEngine | None:
