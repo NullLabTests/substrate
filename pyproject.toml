@@ -37,15 +37,6 @@ license = { text = "MIT" }
 authors = [
     { name = "Substrate Contributors" },
 ]
-
-[project.urls]
-Homepage = "https://github.com/joaomdmoura/crewAI"
-Documentation = "https://docs.crewai.com"
-Repository = "https://github.com/joaomdmoura/crewAI"
-Architecture = "https://github.com/joaomdmoura/crewAI/blob/main/ARCHITECTURE.md"
-Roadmap = "https://github.com/joaomdmoura/crewAI/blob/main/ROADMAP.md"
-Research = "https://github.com/joaomdmoura/crewAI/blob/main/RESEARCH.md"
-
 dependencies = [
     "pydantic>=2.5.0",
     "pyyaml>=6.0",
@@ -55,8 +46,16 @@ dependencies = [
 [project.scripts]
 substrate = "core.__main__:main"
 
+[project.urls]
+Homepage = "https://github.com/NullLabTests/substrate"
+Documentation = "https://github.com/NullLabTests/substrate"
+Repository = "https://github.com/NullLabTests/substrate"
+Architecture = "https://github.com/NullLabTests/substrate/blob/main/ARCHITECTURE.md"
+Roadmap = "https://github.com/NullLabTests/substrate/blob/main/ROADMAP.md"
+Research = "https://github.com/NullLabTests/substrate/blob/main/RESEARCH.md"
+
 [tool.setuptools.packages.find]
-include = ["core*", "storage*", "config*", "orchestrator*", "tests*", "civilization*", "memory*", "economy*", "evolution*", "social*", "tools*", "research*", "docs*"]
+include = ["core*", "storage*", "distributed*", "benchmarks*", "replays*", "snapshots*", "tests*", "civilization*", "memory*", "economy*", "evolution*", "social*", "tools*", "docs*"]
 
 [project.optional-dependencies]
 dev = [
@@ -77,7 +76,7 @@ filterwarnings = [
 ]
 
 [tool.coverage.run]
-source = ["core", "storage", "config", "orchestrator"]
+source = ["core", "storage", "distributed", "benchmarks"]
 omit = ["*/__pycache__/*", "*/tests/*", "*.pyc"]
 
 [tool.coverage.report]

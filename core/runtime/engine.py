@@ -21,6 +21,9 @@ from core.scheduler.tick_scheduler import TickScheduler
 from core.telemetry.pipeline import TelemetryPipeline
 from core.recovery.system import RecoverySystem
 
+from core.distributed.coordinator import Coordinator, DistributedMode
+from core.distributed.message_queue import InProcessMessageQueue
+
 
 class RuntimeState:
     """Enum-like container for runtime states."""
@@ -56,6 +59,8 @@ class RuntimeEngine:
         logger: StructuredLogger,
         recovery: RecoverySystem,
         tick_interval: float = 0.1,
+        distributed_mode: DistributedMode = DistributedMode.LOCAL,
+        coordinator: Coordinator | None = None,
     ) -> None:
         self._event_bus = event_bus
         self._agent_registry = agent_registry
@@ -72,6 +77,10 @@ class RuntimeEngine:
         self._shutdown_event = asyncio.Event()
         self._tick_hooks: list[Callable[[int], Coroutine[Any, Any, None]]] = []
         self._main_task: asyncio.Task[None] | None = None
+
+        self._distributed_mode = distributed_mode
+        self._coordinator = coordinator
+        self._distributed_message_queue: InProcessMessageQueue | None = None
 
     @property
     def state(self) -> str:
@@ -97,13 +106,31 @@ class RuntimeEngine:
         await self._persistence.initialize()
         await self._telemetry.initialize()
 
+        if self._coordinator:
+            for processor in self._coordinator._tick_processors:
+                self.register_tick_hook(processor)
+
         self._logger.info("runtime_initialized", subsystem="engine")
         self._state = RuntimeState.CREATED
+
+    def enable_distributed(
+        self,
+        coordinator: Coordinator,
+        mode: DistributedMode = DistributedMode.DISTRIBUTED,
+    ) -> None:
+        self._coordinator = coordinator
+        self._distributed_mode = mode
+        self._logger.info(
+            "distributed_mode_enabled", mode=mode.value, coordinator_id=coordinator._coordinator_id,
+        )
 
     async def shutdown(self) -> None:
         """Gracefully shut down all subsystems."""
         self._state = RuntimeState.SHUTTING_DOWN
         self._logger.info("runtime_shutting_down", subsystem="engine")
+
+        if self._coordinator:
+            await self._coordinator.stop()
 
         if self._main_task and not self._main_task.done():
             self._main_task.cancel()
@@ -174,6 +201,13 @@ class RuntimeEngine:
 
         for hook in self._tick_hooks:
             await hook(tick)
+
+        if self._distributed_mode != DistributedMode.LOCAL and self._coordinator:
+            results = await self._coordinator.distribute_tick(tick)
+            for result in results:
+                for event_data in result.local_events:
+                    if isinstance(event_data, dict):
+                        self._event_bus.publish_raw(event_data)
 
         self._telemetry.record("ticks", 1)
         self._tick_count = tick
