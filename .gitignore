@@ -31,3 +31,5 @@ chromadb-*.lock
 blogs/*
 secrets/*
 UNKNOWN.egg-info/
+substrate.egg-info/
+*.egg-info/
